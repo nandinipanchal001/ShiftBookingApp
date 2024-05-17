@@ -1,5 +1,5 @@
 import React from 'react';
-import ApplicationNavigator from './src/Navigator/BottomTabsNavigator';
+import ApplicationNavigator from './src/navigator/BottomTabsNavigator';
 
 const App = () => {
   return <ApplicationNavigator />;
