@@ -1,8 +1,24 @@
-import axios from 'axios';
+import _ from 'lodash';
 
-export const fetch = url => {
-  const res = axios.get(url);
+export const fetchData = (url, opts = {}) => {
+  // console.log('method',method)
+  const options = {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    redirect: 'follow',
+    ...opts,
+  };
+  console.log('options', url, options);
+  const res = fetch(url, options);
   return res;
+};
+
+export const processApiRes = async res => {
+  const data = await res.json();
+  // console.log('processApiRes',data)
+  return data;
 };
 
 export const processApiErrors = async (err = {}) => {

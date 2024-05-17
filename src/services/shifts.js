@@ -1,13 +1,15 @@
-import {processApiErrors, fetch} from '../utils/utils';
+import {processApiErrors, fetchData, processApiRes} from '../utils/utils';
 import config from '../config';
 
 const baseUrl = config.baseUrl;
 
 export const getAllShifts = async () => {
   try {
-    const res = await fetch(`${baseUrl}/shifts`);
-    return res;
+    const res = await fetchData(`${baseUrl}/shifts`);
+    const resData = await processApiRes(res);
+    return resData;
   } catch (error) {
+    console.log('error', error);
     const err = await processApiErrors(error);
     throw err;
   }
