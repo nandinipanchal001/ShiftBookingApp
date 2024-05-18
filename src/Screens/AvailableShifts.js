@@ -17,6 +17,24 @@ const AvailableShifts = () => {
   const [filterBy, setFilterBy] = useState('');
   const [data, setData] = useState([]);
 
+  const handleCancelShift = async shift => {
+    try {
+      const res = await shifts.cancelShift(shift.id);
+      console.log('shift cancel', res);
+    } catch (e) {
+      console.log('error', shifts);
+    }
+  };
+
+  const handleBookShift = async shift => {
+    try {
+      const res = await shifts.bookShift(shift.id);
+      console.log('shift cancel', res);
+    } catch (e) {
+      console.log('error', shifts);
+    }
+  };
+
   useEffect(() => {
     const getAllShifts = async () => {
       const res = await shifts.getAllShifts();
@@ -72,7 +90,17 @@ const AvailableShifts = () => {
             <Text>{shifts.booked ? 'Booked' : ''}</Text>
           </View>
           <View style={styles.cancelBtn}>
-            <Button title={shifts.booked ? 'Cancel' : 'Book'} />
+            <Button
+              title={shifts.booked ? 'Cancel' : 'Book'}
+              onPress={() => {
+                let res;
+                if (shifts.booked) {
+                  res = handleCancelShift(shifts);
+                } else {
+                  res = handleBookShift(shifts);
+                }
+              }}
+            />
           </View>
         </View>
       </View>

@@ -14,3 +14,31 @@ export const getAllShifts = async () => {
     throw err;
   }
 };
+
+export const bookShift = async id => {
+  try {
+    const res = await fetchData(`${baseUrl}/shifts/${id}/book`, {
+      method: 'POST',
+    });
+    const resData = await processApiRes(res);
+    return resData;
+  } catch (error) {
+    console.log('error', error);
+    const err = await processApiErrors(error);
+    throw err;
+  }
+};
+
+export const cancelShift = async id => {
+  try {
+    const res = await fetchData(`${baseUrl}/shifts/${id}/cancel`, {
+      method: 'POST',
+    });
+    const resData = await processApiRes(res);
+    return resData;
+  } catch (error) {
+    console.log('error', error);
+    const err = await processApiErrors(error);
+    throw err;
+  }
+};

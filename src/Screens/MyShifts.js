@@ -14,7 +14,6 @@ import Spinner from '../common/spinner';
 
 const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
-  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getAllShifts = async () => {
       const res = await shifts.getAllShifts();
@@ -32,8 +31,13 @@ const MyShifts = () => {
     getAllShifts();
   }, []);
 
-  const handleCancelShift = shift => {
-    console.log('shift book', shift);
+  const handleCancelShift = async shift => {
+    try {
+      const res = await shifts.cancelShift(shift.id);
+      console.log('shift cancel', res);
+    } catch (e) {
+      console.log('error', shifts);
+    }
   };
 
   const displayMyShifts = item => {
