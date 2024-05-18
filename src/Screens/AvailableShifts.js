@@ -76,7 +76,7 @@ const AvailableShifts = () => {
   }, [filterBy]);
 
   const displayAvailableShifts = item => {
-    /* spinner not implemented in Book/cancel button as cancel and book apis are not working */
+    /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
     const shifts = item.item;
     let BookBtn = {
       ...styles.cancelButton,
