@@ -3,23 +3,36 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, ScrollView} from 'react-native';
 import * as shifts from '../services/shifts';
-import Spinner from '../common/spinnerIcon';
 import styles from '../common/styles';
 import Loader from '../common/loader';
 
 const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
   const [isLoading, setLoading] = useState(false);
+
+  const getTimeDifference = (start, end) => {
+    const startMoment = moment(start, 'HH:mm');
+    const endMoment = moment(end, 'HH:mm');
+    const duration = moment.duration(endMoment.diff(startMoment));
+    const hours = duration.hours();
+    const minutes = duration.minutes();
+    return {hours, minutes};
+  };
+
   useEffect(() => {
     const getAllShifts = async () => {
       setLoading(true);
       const res = await shifts.getAllShifts();
       let newShifts = res.map(item => {
+        let startTime = moment(item.startTime).format('H:mm');
+        let endTime = moment(item.endTime).format('H:mm');
+        const totaHrs = getTimeDifference(startTime, endTime);
         return {
           ...item,
           day: moment(item.startTime).format('MMM DD'),
-          startTime: moment(item.startTime).format('H:mm'),
-          endTime: moment(item.endTime).format('H:mm'),
+          startTime: startTime,
+          endTime: endTime,
+          total_hrs: totaHrs,
         };
       });
       newShifts = _.groupBy(newShifts, 'day');
@@ -60,20 +73,26 @@ const MyShifts = () => {
       </View>
     );
   };
+
   return isLoading ? (
     <Loader />
   ) : (
     <ScrollView style={styles.container}>
       <View>
         {Object.keys(myShifts).map(key => {
+          let totalHrs = 0;
+
+          myShifts[key].map(item => {
+            totalHrs =
+              item.total_hrs?.hours + item.total_hrs?.minutes + totalHrs;
+          });
           return (
             <View style={styles.sectionHeaderContainer}>
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionHeaderText}>{key}</Text>
-                <Text
-                  style={
-                    styles.sectionHeaderShiftText
-                  }>{`${myShifts[key].length} Shifts`}</Text>
+                <Text style={styles.sectionHeaderShiftText}>
+                  {`${myShifts[key].length} Shifts,`} {`${totalHrs} Hrs`}
+                </Text>
               </View>
               <FlatList
                 keyExtractor={item => item.id}
