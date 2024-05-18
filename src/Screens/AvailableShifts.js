@@ -1,23 +1,18 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, FlatList, ScrollView} from 'react-native';
 import * as shifts from '../services/shifts';
 import styles from '../common/styles';
 import COLORS from '../common/colors';
+import Loader from '../common/loader';
 
 const AvailableShifts = () => {
   const [availableShifts, setAvailableShifts] = useState([]);
   const [filterCities, setFilterCities] = useState([]);
   const [filterBy, setFilterBy] = useState('');
   const [data, setData] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const handleCancelShift = async shift => {
     try {
@@ -39,6 +34,7 @@ const AvailableShifts = () => {
 
   useEffect(() => {
     const getAllShifts = async () => {
+      setLoading(true);
       const res = await shifts.getAllShifts();
       let newShifts = res.map(item => {
         return {
@@ -75,6 +71,7 @@ const AvailableShifts = () => {
       newData = _.groupBy(newData, 'day');
       console.log('shifts filter', newData);
       setAvailableShifts(newData);
+      setLoading(false);
     }
   }, [filterBy]);
 
@@ -118,7 +115,9 @@ const AvailableShifts = () => {
     );
   };
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <View style={styles.container}>
       <View style={styles.header}>
         {filterCities.map(item => {
@@ -134,7 +133,10 @@ const AvailableShifts = () => {
                   ? COLORS.FILTER_ACTIVE_TEXT
                   : COLORS.FILTER_INACTIVE_TEXT,
               }}
-              onPress={() => setFilterBy(item.city)}>
+              onPress={() => {
+                setFilterBy(item.city);
+                // setLoading(true);
+              }}>
               {item.city}
               {`(${item.count})`}
             </Text>

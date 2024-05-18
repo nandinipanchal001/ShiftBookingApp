@@ -3,13 +3,16 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, ScrollView} from 'react-native';
 import * as shifts from '../services/shifts';
-import Spinner from '../common/spinner';
+import Spinner from '../common/spinnerIcon';
 import styles from '../common/styles';
+import Loader from '../common/loader';
 
 const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const getAllShifts = async () => {
+      setLoading(true);
       const res = await shifts.getAllShifts();
       let newShifts = res.map(item => {
         return {
@@ -21,6 +24,7 @@ const MyShifts = () => {
       });
       newShifts = _.groupBy(newShifts, 'day');
       setMyShifts(newShifts);
+      !_.isEmpty(newShifts) && setLoading(false);
     };
     getAllShifts();
   }, []);
@@ -56,7 +60,9 @@ const MyShifts = () => {
       </View>
     );
   };
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <ScrollView style={styles.container}>
       <View>
         {Object.keys(myShifts).map(key => {
