@@ -8,18 +8,30 @@ const styles = StyleSheet.create({
   },
   sectionHeaderContainer: {
     backgroundColor: COLORS.CITY_LABEL_BG,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.BORDER_COLOR,
+    // borderBottomWidth: 1,
+    // borderBottomColor: COLORS.BORDER_COLOR,
   },
-  sectionHeader: {
+  sectionHeaderText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: COLORS.DATE_COLOR,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.BORDER_COLOR,
+    // borderBottomWidth: 1,
+    // borderBottomColor: COLORS.BORDER_COLOR,
     height: 40,
     paddingVertical: 8,
     paddingHorizontal: 20,
+  },
+  sectionHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.BORDER_COLOR,
+  },
+  sectionHeaderShiftText: {
+    paddingVertical: 8,
+    // borderBottomWidth: 1,
+    // borderBottomColor: COLORS.BORDER_COLOR,
+    // color:''
   },
   time: {
     fontSize: 16,

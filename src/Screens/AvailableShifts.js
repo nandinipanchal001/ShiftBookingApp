@@ -147,8 +147,8 @@ const AvailableShifts = () => {
           {Object.keys(availableShifts).map(key => {
             return (
               <View style={styles.sectionHeaderContainer}>
-                <View>
-                  <Text style={styles.sectionHeader}>{key}</Text>
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionHeaderText}>{key}</Text>
                 </View>
                 <FlatList
                   keyExtractor={item => item.id}

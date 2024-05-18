@@ -1,14 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  Button,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, FlatList, ScrollView} from 'react-native';
 import * as shifts from '../services/shifts';
 import Spinner from '../common/spinner';
 import styles from '../common/styles';
@@ -69,8 +62,12 @@ const MyShifts = () => {
         {Object.keys(myShifts).map(key => {
           return (
             <View style={styles.sectionHeaderContainer}>
-              <View>
-                <Text style={styles.sectionHeader}>{key}</Text>
+              <View style={styles.sectionHeader}>
+                <Text style={styles.sectionHeaderText}>{key}</Text>
+                <Text
+                  style={
+                    styles.sectionHeaderShiftText
+                  }>{`${myShifts[key].length} Shifts`}</Text>
               </View>
               <FlatList
                 keyExtractor={item => item.id}
