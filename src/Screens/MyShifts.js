@@ -90,37 +90,37 @@ export default MyShifts;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: COLORS.PRIMARY_SCREEN_BG,
   },
   sectionHeaderContainer: {
     backgroundColor: COLORS.CITY_LABEL_BG,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: COLORS.BORDER_COLOR,
   },
   sectionHeader: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: COLORS.DATE_COLOR,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: COLORS.BORDER_COLOR,
     height: 40,
     paddingVertical: 8,
     paddingHorizontal: 20,
   },
   time: {
     fontSize: 16,
-    color: '#333',
+    color: COLORS.TIME,
   },
   city: {
     fontSize: 14,
-    color: '#999',
+    color: COLORS.CITY,
   },
   cancelButton: {
     borderRadius: 20,
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderWidth: 1,
-    borderColor: '#ff4081',
+    borderColor: COLORS.CANCEL_BTN_BORDER,
     marginLeft: 'auto',
     width: 100,
     alignItems: 'center',
@@ -128,14 +128,14 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     fontSize: 14,
-    color: '#ff4081',
+    color: COLORS.CANCEL_TEXT,
   },
 
   flatListContainer: {
     // marginBottom: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    backgroundColor: '#ffffff',
+    borderBottomColor: COLORS.BORDER_COLOR,
+    backgroundColor: COLORS.PRIMARY_SCREEN_BG,
     paddingHorizontal: 16,
     paddingVertical: 8,
   },

@@ -7,7 +7,7 @@ import MyShifts from '../screens/MyShifts';
 const Tab = createBottomTabNavigator();
 
 const tabOptions = {
-  tabBarActiveTintColor: '#004FB4',
+  // tabBarActiveTintColor: '#004FB4',
   tabBarInactiveTintColor: '#9B9B9B',
   tabBarIconStyle: {display: 'none'},
   tabBarLabelStyle: {
