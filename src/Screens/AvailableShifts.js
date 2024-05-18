@@ -10,6 +10,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as shifts from '../services/shifts';
+import styles from '../common/styles';
+import COLORS from '../common/colors';
 
 const AvailableShifts = () => {
   const [availableShifts, setAvailableShifts] = useState([]);
@@ -79,19 +81,20 @@ const AvailableShifts = () => {
   const displayAvailableShifts = item => {
     const shifts = item.item;
     return (
-      <View style={styles.flatListContainer}>
+      <View style={{...styles.flatListContainer, paddingVertical: 6}}>
         <View style={styles.item}>
           <View>
-            <Text>
+            <Text style={styles.time}>
               {shifts.startTime}-{shifts.endTime}
             </Text>
           </View>
           <View>
             <Text>{shifts.booked ? 'Booked' : ''}</Text>
           </View>
-          <View style={styles.cancelBtn}>
-            <Button
-              title={shifts.booked ? 'Cancel' : 'Book'}
+          <View style={styles.cancelButton}>
+            <Text
+              style={styles.cancelButtonText}
+              // title={shifts.booked ? 'Cancel' : 'Book'}
               onPress={() => {
                 let res;
                 if (shifts.booked) {
@@ -99,20 +102,31 @@ const AvailableShifts = () => {
                 } else {
                   res = handleBookShift(shifts);
                 }
-              }}
-            />
+              }}>
+              {shifts.booked ? 'Cancel' : 'Book'}
+            </Text>
           </View>
         </View>
       </View>
     );
   };
+
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.header}>
         {filterCities.map(item => {
+          let isActive = false;
+          if (item.city == filterBy) {
+            isActive = true;
+          }
           return (
             <Text
-              style={styles.headerLabel}
+              style={{
+                ...styles.headerLabel,
+                color: isActive
+                  ? COLORS.FILTER_ACTIVE_TEXT
+                  : COLORS.FILTER_INACTIVE_TEXT,
+              }}
               onPress={() => setFilterBy(item.city)}>
               {item.city}
               {`(${item.count})`}
@@ -125,9 +139,9 @@ const AvailableShifts = () => {
         <View>
           {Object.keys(availableShifts).map(key => {
             return (
-              <View>
+              <View style={styles.sectionHeaderContainer}>
                 <View>
-                  <Text style={styles.title}>{key}</Text>
+                  <Text style={styles.sectionHeader}>{key}</Text>
                 </View>
                 <FlatList
                   keyExtractor={item => item.id}
@@ -144,38 +158,3 @@ const AvailableShifts = () => {
 };
 
 export default AvailableShifts;
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  flatListContainer: {
-    marginBottom: 20,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    margin: 2,
-  },
-  cancelBtn: {marginLeft: 'auto'},
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-    // backgroundColor: 'green',
-    padding: 10,
-    justifyContent: 'space-between',
-  },
-  headerLabel: {
-    margin: 10,
-    // backgroundColor:'yellow',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});

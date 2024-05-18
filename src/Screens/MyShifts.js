@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import * as shifts from '../services/shifts';
 import Spinner from '../common/spinner';
-import COLORS from '../common/colors';
+import styles from '../common/styles';
 
 const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
@@ -86,69 +86,3 @@ const MyShifts = () => {
 };
 
 export default MyShifts;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.PRIMARY_SCREEN_BG,
-  },
-  sectionHeaderContainer: {
-    backgroundColor: COLORS.CITY_LABEL_BG,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.BORDER_COLOR,
-  },
-  sectionHeader: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: COLORS.DATE_COLOR,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.BORDER_COLOR,
-    height: 40,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-  },
-  time: {
-    fontSize: 16,
-    color: COLORS.TIME,
-  },
-  city: {
-    fontSize: 14,
-    color: COLORS.CITY,
-  },
-  cancelButton: {
-    borderRadius: 20,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: COLORS.CANCEL_BTN_BORDER,
-    marginLeft: 'auto',
-    width: 100,
-    alignItems: 'center',
-    height: 35,
-  },
-  cancelButtonText: {
-    fontSize: 14,
-    color: COLORS.CANCEL_TEXT,
-  },
-
-  flatListContainer: {
-    // marginBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.BORDER_COLOR,
-    backgroundColor: COLORS.PRIMARY_SCREEN_BG,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  item: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    margin: 2,
-  },
-});

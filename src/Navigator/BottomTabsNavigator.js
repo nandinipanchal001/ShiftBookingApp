@@ -12,7 +12,8 @@ const tabOptions = {
   tabBarIconStyle: {display: 'none'},
   tabBarLabelStyle: {
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 16,
+    paddingBottom:10
   },
   headerShown: false,
 };
