@@ -31,7 +31,6 @@ const MyShifts = () => {
   }, []);
 
   const displayMyShifts = item => {
-    console.log('item shifts', item);
     const shifts = item.item;
     return (
       <View style={styles.flatListContainer}>
