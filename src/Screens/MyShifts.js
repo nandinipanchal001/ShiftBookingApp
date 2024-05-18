@@ -10,9 +10,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import * as shifts from '../services/shifts';
+import Spinner from '../common/spinner';
 
 const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getAllShifts = async () => {
       const res = await shifts.getAllShifts();
@@ -30,6 +32,10 @@ const MyShifts = () => {
     getAllShifts();
   }, []);
 
+  const handleCancelShift = shift => {
+    console.log('shift book', shift);
+  };
+
   const displayMyShifts = item => {
     const shifts = item.item;
     return (
@@ -42,7 +48,7 @@ const MyShifts = () => {
             <Text>{shifts.area}</Text>
           </View>
           <View style={styles.cancelBtn}>
-            <Button title="Cancel" />
+            <Button title="Cancel" onPress={() => handleCancelShift(shifts)} />
           </View>
         </View>
       </View>

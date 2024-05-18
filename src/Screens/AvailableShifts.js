@@ -68,11 +68,11 @@ const AvailableShifts = () => {
               {shifts.startTime}-{shifts.endTime}
             </Text>
           </View>
-          {/* <View>
+          <View>
             <Text>{shifts.booked ? 'Booked' : ''}</Text>
-          </View> */}
+          </View>
           <View style={styles.cancelBtn}>
-            <Button title="Cancel" />
+            <Button title={shifts.booked ? 'Cancel' : 'Book'} />
           </View>
         </View>
       </View>
