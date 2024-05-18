@@ -91,9 +91,16 @@ const AvailableShifts = () => {
           <View>
             <Text>{shifts.booked ? 'Booked' : ''}</Text>
           </View>
-          <View style={styles.cancelButton}>
+          <View
+            style={{
+              ...styles.cancelButton,
+              borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
+            }}>
             <Text
-              style={styles.cancelButtonText}
+              style={{
+                ...styles.cancelButtonText,
+                color: !shifts.booked && COLORS.BOOK_TEXT,
+              }}
               // title={shifts.booked ? 'Cancel' : 'Book'}
               onPress={() => {
                 let res;
