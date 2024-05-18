@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, ScrollView} from 'react-native';
+import {View, Text, FlatList, ScrollView, Pressable} from 'react-native';
 import * as shifts from '../services/shifts';
 import styles from '../common/styles';
 import COLORS from '../common/colors';
@@ -76,7 +76,12 @@ const AvailableShifts = () => {
   }, [filterBy]);
 
   const displayAvailableShifts = item => {
+    /* spinner not implemented in Book/cancel button as cancel and book apis are not working */
     const shifts = item.item;
+    let BookBtn = {
+      ...styles.cancelButton,
+      borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
+    };
     return (
       <View style={{...styles.flatListContainer, paddingVertical: 6}}>
         <View style={styles.item}>
@@ -88,11 +93,15 @@ const AvailableShifts = () => {
           <View>
             <Text>{shifts.booked ? 'Booked' : ''}</Text>
           </View>
-          <View
-            style={{
-              ...styles.cancelButton,
-              borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
-            }}>
+          <Pressable
+            style={({pressed}) => [
+              BookBtn,
+              pressed && {
+                ...styles.cancelButton,
+                borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
+                backgroundColor: '#CAEFD8',
+              },
+            ]}>
             <Text
               style={{
                 ...styles.cancelButtonText,
@@ -109,7 +118,7 @@ const AvailableShifts = () => {
               }}>
               {shifts.booked ? 'Cancel' : 'Book'}
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
     );

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, ScrollView} from 'react-native';
+import {View, Text, FlatList, ScrollView, Pressable} from 'react-native';
 import * as shifts from '../services/shifts';
 import styles from '../common/styles';
 import Loader from '../common/loader';
@@ -52,6 +52,8 @@ const MyShifts = () => {
   };
 
   const displayMyShifts = item => {
+    /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
+
     const shifts = item.item;
     return (
       <View style={styles.flatListContainer}>
@@ -62,13 +64,20 @@ const MyShifts = () => {
             </Text>
             <Text style={styles.city}>{shifts.area}</Text>
           </View>
-          <View style={styles.cancelButton}>
+          <Pressable
+            style={({pressed}) => [
+              styles.cancelButton,
+              pressed && {
+                ...styles.cancelButton,
+                backgroundColor: '#EED2DF',
+              },
+            ]}>
             <Text
               style={styles.cancelButtonText}
               onPress={() => handleCancelShift(shifts)}>
               Cancel
             </Text>
-          </View>
+          </Pressable>
         </View>
       </View>
     );
