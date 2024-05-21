@@ -14,6 +14,10 @@ const AvailableShifts = () => {
   const [data, setData] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+  /**
+   * Cancel a shift
+   * @param {Shifts[]} shift
+   */
   const handleCancelShift = async shift => {
     try {
       const res = await shifts.cancelShift(shift.id);
@@ -23,6 +27,10 @@ const AvailableShifts = () => {
     }
   };
 
+  /**
+   * Book a shift
+   * @param {Shifts[]} shift
+   */
   const handleBookShift = async shift => {
     try {
       const res = await shifts.bookShift(shift.id);
@@ -32,6 +40,9 @@ const AvailableShifts = () => {
     }
   };
 
+  /**
+   * Get all shifts
+   */
   useEffect(() => {
     const getAllShifts = async () => {
       setLoading(true);
@@ -55,7 +66,7 @@ const AvailableShifts = () => {
           count: citiesCount[item].length,
         };
       });
-      /*
+      /**
        * set Filter cities and and the default city for which list to be displayed
        */
       setFilterCities(newCities);
@@ -65,7 +76,9 @@ const AvailableShifts = () => {
   }, []);
 
   useEffect(() => {
-    /* set final data in the list depending on the filtered city/area */
+    /**
+     *set final data in the list depending on the filtered city/area
+     */
     if (filterBy) {
       let newData = data.filter(item => item.area == filterBy);
       newData = _.groupBy(newData, 'day');
@@ -75,8 +88,17 @@ const AvailableShifts = () => {
     }
   }, [filterBy]);
 
+  /**
+   * Displays a list of Shifts
+   *
+   * @param {Shifts[]} item
+   * @returns
+   */
+
   const displayAvailableShifts = item => {
-    /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
+    /**
+     * spinner has not been implemented in Book/cancel button as cancel and book apis are not working
+     */
     const shifts = item.item;
     let BookBtn = {
       ...styles.cancelButton,

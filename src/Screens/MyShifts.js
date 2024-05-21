@@ -10,6 +10,9 @@ const MyShifts = () => {
   const [myShifts, setMyShifts] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
+  /**
+   * Get time difference between two time intervals in hours and minutes
+   */
   const getTimeDifference = (start, end) => {
     const startMoment = moment(start, 'HH:mm');
     const endMoment = moment(end, 'HH:mm');
@@ -19,6 +22,9 @@ const MyShifts = () => {
     return {hours, minutes};
   };
 
+  /**
+   * Fetch all shifts
+   */
   useEffect(() => {
     const getAllShifts = async () => {
       setLoading(true);
@@ -42,6 +48,10 @@ const MyShifts = () => {
     getAllShifts();
   }, []);
 
+  /**
+   * Cancel shift
+   * @param {*} shift
+   */
   const handleCancelShift = async shift => {
     try {
       const res = await shifts.cancelShift(shift.id);
@@ -51,9 +61,14 @@ const MyShifts = () => {
     }
   };
 
+  /**
+   * Displays a list of Shifts
+   *
+   * @param {Shifts[]} item
+   * @returns
+   */
   const displayMyShifts = item => {
     /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
-
     const shifts = item.item;
     return (
       <View style={styles.flatListContainer}>
