@@ -1,3 +1,5 @@
-const baseUrl = 'https://6ce9-150-107-26-146.ngrok-free.app';
+import {API_KEY} from '@env';
+
+const baseUrl = API_KEY;
 
 export default {baseUrl};
