@@ -95,11 +95,11 @@ const AvailableShifts = () => {
    * @returns
    */
 
-  const displayAvailableShifts = item => {
+  const displayAvailableShifts = ({item}) => {
     /**
      * spinner has not been implemented in Book/cancel button as cancel and book apis are not working
      */
-    const shifts = item.item;
+    const shifts = item;
     let BookBtn = {
       ...styles.cancelButton,
       borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,

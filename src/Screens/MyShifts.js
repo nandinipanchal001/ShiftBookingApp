@@ -67,9 +67,9 @@ const MyShifts = () => {
    * @param {Shifts[]} item
    * @returns
    */
-  const displayMyShifts = item => {
+  const displayMyShifts = ({item}) => {
     /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
-    const shifts = item.item;
+    const shifts = item;
     return (
       <View style={styles.flatListContainer}>
         <View style={styles.item}>
