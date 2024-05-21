@@ -88,6 +88,64 @@ const AvailableShifts = () => {
     }
   }, [filterBy]);
 
+  /**
+   * Displays a list of Shifts
+   *
+   * @param {Shifts[]} item
+   * @returns
+   */
+
+  const displayAvailableShifts = ({item}) => {
+    /**
+     * spinner has not been implemented in Book/cancel button as cancel and book apis are not working
+     */
+    const shifts = item;
+    let BookBtn = {
+      ...styles.cancelButton,
+      borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
+    };
+    return (
+      <View style={{...styles.flatListContainer, paddingVertical: 6}}>
+        <View style={styles.item}>
+          <View>
+            <Text style={styles.time}>
+              {shifts.startTime}-{shifts.endTime}
+            </Text>
+          </View>
+          <View>
+            <Text>{shifts.booked ? 'Booked' : ''}</Text>
+          </View>
+          <Pressable
+            style={({pressed}) => [
+              BookBtn,
+              pressed && {
+                ...styles.cancelButton,
+                borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
+                backgroundColor: '#CAEFD8',
+              },
+            ]}>
+            <Text
+              style={{
+                ...styles.cancelButtonText,
+                color: !shifts.booked && COLORS.BOOK_TEXT,
+              }}
+              // title={shifts.booked ? 'Cancel' : 'Book'}
+              onPress={() => {
+                let res;
+                if (shifts.booked) {
+                  res = handleCancelShift(shifts);
+                } else {
+                  res = handleBookShift(shifts);
+                }
+              }}>
+              {shifts.booked ? 'Cancel' : 'Book'}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  };
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -125,81 +183,16 @@ const AvailableShifts = () => {
                 <View style={styles.sectionHeader}>
                   <Text style={styles.sectionHeaderText}>{key}</Text>
                 </View>
-                {availableShifts[key].map(item => {
-                  return (
-                    <DisplayAvailableShifts
-                      item={item}
-                      handleBookShift={handleBookShift}
-                      handleCancelShift={handleCancelShift}
-                    />
-                  );
-                })}
+                <FlatList
+                  keyExtractor={item => item.id}
+                  data={availableShifts[key]}
+                  renderItem={item => displayAvailableShifts(item)}
+                />
               </View>
             );
           })}
         </View>
       </ScrollView>
-    </View>
-  );
-};
-
-/**
- * Displays a list of Shifts
- *
- * @param {Shifts[]} item
- * @returns
- */
-
-export const DisplayAvailableShifts = ({
-  item,
-  handleCancelShift,
-  handleBookShift,
-}) => {
-  /**
-   * spinner has not been implemented in Book/cancel button as cancel and book apis are not working
-   */
-  const shifts = item;
-  let BookBtn = {
-    ...styles.cancelButton,
-    borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
-  };
-  return (
-    <View style={{...styles.flatListContainer, paddingVertical: 6}}>
-      <View style={styles.item}>
-        <View>
-          <Text style={styles.time}>
-            {shifts.startTime}-{shifts.endTime}
-          </Text>
-        </View>
-        <View>
-          <Text>{shifts.booked ? 'Booked' : ''}</Text>
-        </View>
-        <Pressable
-          style={({pressed}) => [
-            BookBtn,
-            pressed && {
-              ...styles.cancelButton,
-              borderColor: !shifts.booked && COLORS.BOOK_BTN_BORDER,
-              backgroundColor: '#CAEFD8',
-            },
-          ]}>
-          <Text
-            style={{
-              ...styles.cancelButtonText,
-              color: !shifts.booked && COLORS.BOOK_TEXT,
-            }}
-            onPress={() => {
-              let res;
-              if (shifts.booked) {
-                res = handleCancelShift(shifts);
-              } else {
-                res = handleBookShift(shifts);
-              }
-            }}>
-            {shifts.booked ? 'Cancel' : 'Book'}
-          </Text>
-        </Pressable>
-      </View>
     </View>
   );
 };
