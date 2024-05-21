@@ -39,6 +39,7 @@ const MyShifts = () => {
           startTime: startTime,
           endTime: endTime,
           total_hrs: totaHrs,
+          date: moment(item.startTime).format('MMMM Do YYYY, h:mm:ss a'),
         };
       });
       newShifts = _.groupBy(newShifts, 'day');
@@ -106,6 +107,7 @@ const MyShifts = () => {
 export const DisplayMyShifts = ({item, handleCancelShift}) => {
   /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
   const shifts = item;
+  let disabled = shifts.date <= moment().format('MMMM Do YYYY, h:mm:ss a');
   return (
     <View style={styles.flatListContainer}>
       <View style={styles.item}>
@@ -117,15 +119,16 @@ export const DisplayMyShifts = ({item, handleCancelShift}) => {
         </View>
         <Pressable
           style={({pressed}) => [
-            styles.cancelButton,
-            pressed && {
-              ...styles.cancelButton,
-              backgroundColor: '#EED2DF',
-            },
+            disabled ? styles.disabledBtn : styles.cancelButton,
+            !disabled &&
+              pressed && {
+                ...styles.cancelButton,
+                backgroundColor: '#EED2DF',
+              },
           ]}>
           <Text
-            style={styles.cancelButtonText}
-            onPress={() => handleCancelShift(shifts)}>
+            style={disabled ? styles.disabledBtnText : styles.cancelButtonText}
+            onPress={() => !disabled && handleCancelShift(shifts)}>
             Cancel
           </Text>
         </Pressable>

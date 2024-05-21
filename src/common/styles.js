@@ -89,6 +89,21 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
   },
+  disabledBtn: {
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginLeft: 'auto',
+    width: 100,
+    alignItems: 'center',
+    height: 35,
+  },
+  disabledBtnText:{
+    fontSize: 14,
+    color: 'grey',
+  }
 });
 
 export default styles;
