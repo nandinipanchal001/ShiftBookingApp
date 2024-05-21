@@ -61,43 +61,6 @@ const MyShifts = () => {
     }
   };
 
-  /**
-   * Displays a list of Shifts
-   *
-   * @param {Shifts[]} item
-   * @returns
-   */
-  const displayMyShifts = ({item}) => {
-    /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
-    const shifts = item;
-    return (
-      <View style={styles.flatListContainer}>
-        <View style={styles.item}>
-          <View>
-            <Text style={styles.time}>
-              {shifts.startTime}-{shifts.endTime}
-            </Text>
-            <Text style={styles.city}>{shifts.area}</Text>
-          </View>
-          <Pressable
-            style={({pressed}) => [
-              styles.cancelButton,
-              pressed && {
-                ...styles.cancelButton,
-                backgroundColor: '#EED2DF',
-              },
-            ]}>
-            <Text
-              style={styles.cancelButtonText}
-              onPress={() => handleCancelShift(shifts)}>
-              Cancel
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-    );
-  };
-
   return isLoading ? (
     <Loader />
   ) : (
@@ -118,16 +81,56 @@ const MyShifts = () => {
                   {`${myShifts[key].length} Shifts,`} {`${totalHrs} Hrs`}
                 </Text>
               </View>
-              <FlatList
-                keyExtractor={item => item.id}
-                data={myShifts[key]}
-                renderItem={item => displayMyShifts(item)}
-              />
+              {myShifts[key].map(item => {
+                return (
+                  <DisplayMyShifts
+                    item={item}
+                    handleCancelShift={handleCancelShift}
+                  />
+                );
+              })}
             </View>
           );
         })}
       </View>
     </ScrollView>
+  );
+};
+
+/**
+ * Displays a list of Shifts
+ *
+ * @param {Shifts[]} item
+ * @returns
+ */
+export const DisplayMyShifts = ({item, handleCancelShift}) => {
+  /* spinner has not been implemented in Book/cancel button as cancel and book apis are not working */
+  const shifts = item;
+  return (
+    <View style={styles.flatListContainer}>
+      <View style={styles.item}>
+        <View>
+          <Text style={styles.time}>
+            {shifts.startTime}-{shifts.endTime}
+          </Text>
+          <Text style={styles.city}>{shifts.area}</Text>
+        </View>
+        <Pressable
+          style={({pressed}) => [
+            styles.cancelButton,
+            pressed && {
+              ...styles.cancelButton,
+              backgroundColor: '#EED2DF',
+            },
+          ]}>
+          <Text
+            style={styles.cancelButtonText}
+            onPress={() => handleCancelShift(shifts)}>
+            Cancel
+          </Text>
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
